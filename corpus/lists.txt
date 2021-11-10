@@ -1,0 +1,84 @@
+================================================================================
+Succession of basic values
+================================================================================
+
+scheme gauss something 1.0;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (basic_value
+        (word))
+      (basic_value
+        (word))
+      (basic_value
+        (number_literal)))))
+
+================================================================================
+Complete list
+================================================================================
+
+list List<scalar> 3 (item word phi(U));
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (basic_value
+        (list
+          (list_head)
+          (number_literal)
+          (list_items
+            (basic_value
+              (word))
+            (basic_value
+              (word))
+            (basic_value
+              (identifier))))))))
+
+================================================================================
+Simplified list
+================================================================================
+
+list 2 (item word);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (basic_value
+        (word))
+      (basic_value
+        (list
+          (list_items
+            (basic_value
+              (word))
+            (basic_value
+              (word))))))))
+
+================================================================================
+Simplest list
+================================================================================
+
+list (item word);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (basic_value
+        (list
+          (list_items
+            (basic_value
+              (word))
+            (basic_value
+              (word))))))))

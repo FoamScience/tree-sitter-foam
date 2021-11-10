@@ -1,0 +1,92 @@
+================================================================================
+Dictionary of key-value pairs
+================================================================================
+
+dict
+{
+    entry1 0.0;
+    entry2 "spaced string";
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dict
+    (identifier)
+    (keyvalue
+      (identifier)
+      (value
+        (basic_value
+          (number_literal))))
+    (keyvalue
+      (identifier)
+      (value
+        (basic_value
+          (string_literal))))))
+
+================================================================================
+Dictionary of dictionaries
+================================================================================
+
+dict
+{
+    entry1
+    {
+        param 1.0;
+    }
+    ".*Wall"
+    {
+        param 5.0;
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dict
+    (identifier)
+    (dict
+      (identifier)
+      (keyvalue
+        (identifier)
+        (value
+          (basic_value
+            (number_literal)))))
+    (dict
+      (string_literal)
+      (keyvalue
+        (identifier)
+        (value
+          (basic_value
+            (number_literal)))))))
+
+================================================================================
+Dictionary of dictionaries and keyvalues
+================================================================================
+
+dict
+{
+    entry1
+    {
+        param 1.0;
+    }
+    entry2 0.0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dict
+    (identifier)
+    (dict
+      (identifier)
+      (keyvalue
+        (identifier)
+        (value
+          (basic_value
+            (number_literal)))))
+    (keyvalue
+      (identifier)
+      (value
+        (basic_value
+          (number_literal))))))

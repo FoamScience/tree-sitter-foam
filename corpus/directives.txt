@@ -1,0 +1,104 @@
+================================================================================
+Include directive with string argument
+================================================================================
+
+#include "Windowsy path to file.cfg"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (preproc_call
+    (word)
+    (string_literal)))
+
+================================================================================
+Include directive with word argument
+================================================================================
+
+#   includeFunc writeObjects(d = gas)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (preproc_call
+    (word)
+    (word)
+    (word)
+    (word)))
+
+================================================================================
+Calc/neg directive as a keyword value
+================================================================================
+
+var  #calc "$Lx+$MP";
+var  #neg $Lx;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (preproc_call
+        (word)
+        (string_literal))))
+  (keyvalue
+    (identifier)
+    (value
+      (preproc_call
+        (word)
+        (macro
+          (identifier))))))
+
+================================================================================
+Calc/neg directive as a part of keyword value
+================================================================================
+
+internalField   uniform (#neg $UMean 0 0);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (word)
+      (list
+        (list_items
+          (preproc_call
+            (word)
+            (macro
+              (identifier)))
+          (number_literal)
+          (number_literal))))))
+
+================================================================================
+CodeStream directive as a keyword value
+================================================================================
+
+lift  #codeStream
+{
+    codeInclude #{ #include "vector.H" #};
+    code
+    #{
+        pointField points(30);
+        points[0]  = point(0.5, 0, -0.5);
+    #};
+};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (preproc_call
+        (word)
+        (keyvalue
+          (identifier)
+          (value
+            (code)))
+        (keyvalue
+          (identifier)
+          (value
+            (code)))))))

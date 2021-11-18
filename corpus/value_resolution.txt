@@ -1,4 +1,93 @@
 ================================================================================
+Key-value pair with missing value
+================================================================================
+
+number ;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)))
+
+================================================================================
+Literal strings with spaces/escapes
+================================================================================
+
+number "Cool string with spaces";
+number "Cool string\\n with spaces";
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (string_literal)))
+  (keyvalue
+    (identifier)
+    (value
+      (string_literal
+        (escape_sequence)))))
+
+================================================================================
+Literal strings as keyword names
+================================================================================
+
+".*Wall" 1.0;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (string_literal)
+    (value
+      (number_literal))))
+
+================================================================================
+Literal floating-point numbers
+================================================================================
+
+number 5;
+number .5;
+number -1.25;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal)))
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal)))
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal))))
+
+================================================================================
+Literal scientific notation
+================================================================================
+
+number 5.0e13;
+number -5.0E-13;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal)))
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal))))
+
+================================================================================
 Words as keyword name and value
 ================================================================================
 
@@ -10,8 +99,7 @@ scheme Gauss1;
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (word)))))
+      (word))))
 
 ================================================================================
 Identifiers as a keyword name
@@ -25,14 +113,14 @@ div(phi,U1) K;
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (word)))))
+      (word))))
 
 ================================================================================
-Macros as a value refering to word-like name
+Macros as a value referring to word-like name
 ================================================================================
 
 div(phi,U1) $.. DK;
+var         $PO;
 
 --------------------------------------------------------------------------------
 
@@ -40,7 +128,116 @@ div(phi,U1) $.. DK;
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (macro
-          (prev_scope)
-          (identifier))))))
+      (macro
+        (prev_scope)
+        (identifier))))
+  (keyvalue
+    (identifier)
+    (value
+      (macro
+        (identifier)))))
+
+================================================================================
+Boolean values
+================================================================================
+
+option1 off;
+option2 on;
+option3 true;
+option4 false;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (boolean)))
+  (keyvalue
+    (identifier)
+    (value
+      (boolean)))
+  (keyvalue
+    (identifier)
+    (value
+      (boolean)))
+  (keyvalue
+    (identifier)
+    (value
+      (boolean))))
+
+================================================================================
+Cpp code block as a keyword value with "#{" and "#}" inside a string
+================================================================================
+
+code
+#{
+    /*
+       This will fail badly if "#{" shows up here outside a string literal
+    */
+    #include<vector>
+    #include "someFile.H"
+
+    {
+        os << vector(-::sin($angle), 0, ::cos($angle));
+        os << "#{ example #}";
+    }
+#};
+
+codeInclude #{ #include "vector.H" #};
+
+code
+#{
+    pointField points(30);
+    points[0]  = point(0.5, 0, -0.5);
+#};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (code)))
+  (keyvalue
+    (identifier)
+    (value
+      (code)))
+  (keyvalue
+    (identifier)
+    (value
+      (code))))
+
+================================================================================
+Identifiers with math operators in name
+================================================================================
+
+laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (word)
+      (word)
+      (word))))
+
+================================================================================
+Macros as filename paths
+================================================================================
+
+dict 
+{
+    $../../some/file/path
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dict
+    (identifier)
+    (macro
+      (prev_scope)
+      (identifier))))

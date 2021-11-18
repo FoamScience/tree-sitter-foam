@@ -10,18 +10,15 @@ scheme gauss something 1.0;
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (word))
-      (basic_value
-        (word))
-      (basic_value
-        (number_literal)))))
+      (word)
+      (word)
+      (number_literal))))
 
 ================================================================================
 Complete list
 ================================================================================
 
-list List<scalar> 3 (item word phi(U));
+list List<label> 3 (1.0 word phi(U));
 
 --------------------------------------------------------------------------------
 
@@ -29,17 +26,13 @@ list List<scalar> 3 (item word phi(U));
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (list
-          (list_head)
+      (list
+        (list_head)
+        (number_literal)
+        (list_items
           (number_literal)
-          (list_items
-            (basic_value
-              (word))
-            (basic_value
-              (word))
-            (basic_value
-              (identifier))))))))
+          (identifier)
+          (identifier))))))
 
 ================================================================================
 Simplified list
@@ -53,15 +46,11 @@ list 2 (item word);
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (word))
-      (basic_value
-        (list
-          (list_items
-            (basic_value
-              (word))
-            (basic_value
-              (word))))))))
+      (list
+        (number_literal)
+        (list_items
+          (identifier)
+          (identifier))))))
 
 ================================================================================
 Simplest list
@@ -75,10 +64,110 @@ list (item word);
   (keyvalue
     (identifier)
     (value
-      (basic_value
-        (list
-          (list_items
-            (basic_value
-              (word))
-            (basic_value
-              (word))))))))
+      (list
+        (list_items
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Uniform lists
+================================================================================
+
+list 5{0};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (number_literal)
+      (number_literal))))
+
+================================================================================
+Lists of dictionaries with list-like keywords
+================================================================================
+
+boundary
+(
+    inlet
+    {
+        type            patch;
+        edgeLabels      List<label> 3 (2 5 346);
+    }
+    outlet
+    {
+        type            patch;
+    }
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (keyvalue
+    (identifier)
+    (value
+      (list
+        (list_items
+          (dict
+            (identifier)
+            (keyvalue
+              (identifier)
+              (value
+                (word)))
+            (keyvalue
+              (identifier)
+              (value
+                (list
+                  (list_head)
+                  (number_literal)
+                  (list_items
+                    (number_literal)
+                    (number_literal)
+                    (number_literal))))))
+          (dict
+            (identifier)
+            (keyvalue
+              (identifier)
+              (value
+                (word)))))))))
+
+================================================================================
+Free lists with comments (for eMesh files)
+================================================================================
+
+(
+    11 // entry 1
+    (
+        4
+        5    // Some comment
+        6
+    ) // position 2 
+)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (list_items
+    (number_literal)
+    (comment)
+    (list_items
+      (number_literal)
+      (number_literal)
+      (comment)
+      (number_literal))
+    (comment)))
+
+================================================================================
+Empty Free lists with comments
+================================================================================
+
+(
+    // entry 1
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (list_items
+    (comment)))

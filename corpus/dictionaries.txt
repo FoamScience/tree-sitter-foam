@@ -1,44 +1,16 @@
 ================================================================================
-Empty dictionary
+Base dictionaries with
 ================================================================================
 
 dict
 {
 }
-
---------------------------------------------------------------------------------
-
-(source_file
-  (dict
-    (identifier)))
-
-================================================================================
-Dictionary of key-value pairs
-================================================================================
 
 dict
 {
     entry1 0.0;
     entry2 "spaced string";
 }
-
---------------------------------------------------------------------------------
-
-(source_file
-  (dict
-    (identifier)
-    (keyvalue
-      (identifier)
-      (value
-        (number_literal)))
-    (keyvalue
-      (identifier)
-      (value
-        (string_literal)))))
-
-================================================================================
-Dictionary of dictionaries with comments
-================================================================================
 
 dict
 {
@@ -55,40 +27,7 @@ dict
     }
 
     $entry1;
-}
 
---------------------------------------------------------------------------------
-
-(source_file
-  (dict
-    (identifier)
-    (comment)
-    (dict
-      (identifier)
-      (keyvalue
-        (identifier)
-        (value
-          (number_literal))))
-    (comment)
-    (dict
-      (string_literal)
-      (keyvalue
-        (identifier)
-        (value
-          (number_literal))))
-    (macro
-      (identifier))))
-
-================================================================================
-Dictionary of dictionaries and keyvalues
-================================================================================
-
-dict
-{
-    entry1
-    {
-        param 1.0;
-    }
     entry2 0.0;
 }
 
@@ -96,16 +35,34 @@ dict
 
 (source_file
   (dict
+    (identifier))
+  (dict
     (identifier)
-    (keyvalue
+    (key_value
       (identifier)
-      (value
-        (keyvalue
-          (identifier)
-          (value
-            (number_literal)))
-        (word)
-        (number_literal)))))
+      (number_literal))
+    (key_value
+      (identifier)
+      (string_literal)))
+  (dict
+    (identifier)
+    (comment)
+    (dict
+      (identifier)
+      (key_value
+        (identifier)
+        (number_literal)))
+    (comment)
+    (dict
+      (string_literal)
+      (key_value
+        (identifier)
+        (number_literal)))
+    (macro
+      (identifier))
+    (key_value
+      (identifier)
+      (number_literal))))
 
 ================================================================================
 Dictionary with comment after identifier
@@ -122,10 +79,9 @@ dict // description
   (dict
     (identifier)
     (comment)
-    (keyvalue
+    (key_value
       (identifier)
-      (value
-        (word)))))
+      (identifier))))
 
 ================================================================================
 Dictionaries as parts of keyword values
@@ -142,24 +98,125 @@ default CrankNicolson ocCoeff
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (word)
-      (word)
-      (keyvalue
+    (identifier)
+    (dict
+      (identifier)
+      (key_value
         (identifier)
-        (value
-          (word)))
-      (keyvalue
+        (identifier))
+      (key_value
         (identifier)
-        (value
-          (word)))
-      (keyvalue
+        (identifier))
+      (key_value
         (identifier)
-        (value
-          (number_literal)))
-      (keyvalue
+        (number_literal))
+      (key_value
         (identifier)
-        (value
-          (number_literal))))))
+        (number_literal)))))
+
+================================================================================
+Lists of dictionaries with list-like keywords
+================================================================================
+
+boundary
+(
+    inlet
+    {
+        type            patch;
+        edgeLabels      List<label> 3 (2 5 346);
+    }
+    outlet
+    {
+        type            patch;
+    }
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key_value
+    (identifier)
+    (list
+      (identifier)
+      (dict_headless
+        (key_value
+          (identifier)
+          (identifier))
+        (key_value
+          (identifier)
+          (identifier)
+          (number_literal)
+          (list
+            (number_literal)
+            (number_literal)
+            (number_literal))))
+      (identifier)
+      (dict_headless
+        (key_value
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Lists of headless dictionaries
+================================================================================
+
+boundary
+(
+    {
+        type            patch;
+        edgeLabels      List<label> 3 (2 5 346);
+    }
+    {
+        type            patch;
+    }
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key_value
+    (identifier)
+    (list
+      (dict_headless
+        (key_value
+          (identifier)
+          (identifier))
+        (key_value
+          (identifier)
+          (identifier)
+          (number_literal)
+          (list
+            (number_literal)
+            (number_literal)
+            (number_literal))))
+      (dict_headless
+        (key_value
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Dictionaries with list-like keys
+================================================================================
+
+(gas and liquid)
+{
+    type            constant;
+    sigma           0.07;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dict
+    (list
+      (identifier)
+      (identifier)
+      (identifier))
+    (key_value
+      (identifier)
+      (identifier))
+    (key_value
+      (identifier)
+      (number_literal))))

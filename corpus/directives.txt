@@ -1,79 +1,119 @@
 ================================================================================
-Include directive with string argument
+Include directives
 ================================================================================
 
 #include "Windowsy path to file.cfg"
-
---------------------------------------------------------------------------------
-
-(source_file
-  (preproc_call
-    (word)
-    (string_literal)))
-
-================================================================================
-Include directive with word argument
-================================================================================
-
 #   includeFunc writeObjects(d = gas)
+#includeFunc fieldAverage(U.particles, U.air, alpha.particles, p)
+
+#if #calc "${angle} < 75"
+#else
 
 --------------------------------------------------------------------------------
 
 (source_file
   (preproc_call
-    (word)
-    (word)
-    (word)
-    (word)))
+    (identifier)
+    (string_literal))
+  (preproc_call
+    (identifier)
+    (identifier))
+  (preproc_call
+    (identifier)
+    (identifier))
+  (preproc_call
+    (identifier)
+    (preproc_call
+      (identifier)
+      (string_literal)))
+  (preproc_call))
 
 ================================================================================
-Calc/neg directive as a keyword value
+Calc/neg directives
 ================================================================================
 
 var  #calc "$Lx+$MP";
 var  #neg $Lx;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
-    (identifier)
-    (value
-      (preproc_call
-        (word)
-        (string_literal))))
-  (keyvalue
-    (identifier)
-    (value
-      (preproc_call
-        (word)
-        (macro
-          (identifier))))))
-
-================================================================================
-Calc/neg directive as a part of keyword value
-================================================================================
-
 internalField   uniform (#neg $UMean 0 0);
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (word)
-      (list
-        (list_items
-          (preproc_call
-            (word)
-            (macro
-              (identifier)))
-          (number_literal)
-          (number_literal))))))
+    (preproc_call
+      (identifier)
+      (string_literal)))
+  (key_value
+    (identifier)
+    (preproc_call
+      (identifier)
+      (macro
+        (identifier))))
+  (key_value
+    (identifier)
+    (identifier)
+    (list
+      (preproc_call
+        (identifier)
+        (macro
+          (identifier)))
+      (number_literal)
+      (number_literal))))
 
 ================================================================================
-CodeStream directive as a keyword value
+Conditional directives
+================================================================================
+
+#if #calc "${angle} < 75"
+    default  Gauss linear corrected;
+#else
+    default  Gauss linear limited corrected 0.5;
+#endif
+
+#ifeq ${FOAM_APPLICATION} simpleFoam
+    default         steadyState;
+#else
+    default         Euler;
+#endif
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (preproc_call
+    (identifier)
+    (preproc_call
+      (identifier)
+      (string_literal)))
+  (key_value
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier))
+  (preproc_call)
+  (key_value
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (number_literal))
+  (preproc_call)
+  (preproc_call
+    (macro
+      (identifier))
+    (identifier))
+  (key_value
+    (identifier)
+    (identifier))
+  (preproc_call)
+  (key_value
+    (identifier)
+    (identifier))
+  (preproc_call))
+
+================================================================================
+CodeStream directives
 ================================================================================
 
 lift  #codeStream
@@ -89,16 +129,14 @@ lift  #codeStream
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (preproc_call
-        (word)
-        (keyvalue
+    (preproc_call
+      (identifier)
+      (dict_headless
+        (key_value
           (identifier)
-          (value
-            (code)))
-        (keyvalue
+          (code))
+        (key_value
           (identifier)
-          (value
-            (code)))))))
+          (code))))))

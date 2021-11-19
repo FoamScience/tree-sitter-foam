@@ -1,4 +1,19 @@
 ================================================================================
+Comments
+================================================================================
+
+// Comment 1
+/*
+    Comment 2
+*/
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment))
+
+================================================================================
 Key-value pair with missing value
 ================================================================================
 
@@ -7,135 +22,123 @@ number ;
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)))
+
+================================================================================
+Dimensions
+================================================================================
+
+dimensions [1 -1 2 0 0 0];
+dimensions [m^2 s^-2];
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key_value
+    (identifier)
+    (dimensions
+      (number_literal)
+      (number_literal)
+      (number_literal)
+      (number_literal)
+      (number_literal)
+      (number_literal)))
+  (key_value
+    (identifier)
+    (dimensions
+      (identifier)
+      (identifier))))
+
+================================================================================
+Succession of basic values
+================================================================================
+
+scheme gauss something 1.0;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key_value
+    (identifier)
+    (identifier)
+    (identifier)
+    (number_literal)))
 
 ================================================================================
 Literal strings with spaces/escapes
 ================================================================================
 
-number "Cool string with spaces";
-number "Cool string\\n with spaces";
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
-    (identifier)
-    (value
-      (string_literal)))
-  (keyvalue
-    (identifier)
-    (value
-      (string_literal
-        (escape_sequence)))))
-
-================================================================================
-Literal strings as keyword names
-================================================================================
-
+key "Cool string with spaces";
+key "Cool string\\n with spaces";
 ".*Wall" 1.0;
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
+    (identifier)
+    (string_literal))
+  (key_value
+    (identifier)
+    (string_literal
+      (escape_sequence)))
+  (key_value
     (string_literal)
-    (value
-      (number_literal))))
+    (number_literal)))
 
 ================================================================================
-Literal floating-point numbers
+Floating-point numbers
 ================================================================================
 
 number 5;
 number .5;
 number -1.25;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
-    (identifier)
-    (value
-      (number_literal)))
-  (keyvalue
-    (identifier)
-    (value
-      (number_literal)))
-  (keyvalue
-    (identifier)
-    (value
-      (number_literal))))
-
-================================================================================
-Literal scientific notation
-================================================================================
-
 number 5.0e13;
 number -5.0E-13;
 
+
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (number_literal)))
-  (keyvalue
+    (number_literal))
+  (key_value
     (identifier)
-    (value
-      (number_literal))))
+    (number_literal))
+  (key_value
+    (identifier)
+    (number_literal))
+  (key_value
+    (identifier)
+    (number_literal))
+  (key_value
+    (identifier)
+    (number_literal)))
 
 ================================================================================
-Words as keyword name and value
+Identifiers as keywords and values
 ================================================================================
 
 scheme Gauss1;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
-    (identifier)
-    (value
-      (word))))
-
-================================================================================
-Identifiers as a keyword name
-================================================================================
-
 div(phi,U1) K;
+laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (word))))
-
-================================================================================
-Macros as a value referring to word-like name
-================================================================================
-
-div(phi,U1) $.. DK;
-var         $PO;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
+    (identifier))
+  (key_value
     (identifier)
-    (value
-      (macro
-        (prev_scope)
-        (identifier))))
-  (keyvalue
+    (identifier))
+  (key_value
     (identifier)
-    (value
-      (macro
-        (identifier)))))
+    (identifier)
+    (identifier)
+    (identifier)))
 
 ================================================================================
 Boolean values
@@ -149,31 +152,69 @@ option4 false;
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (boolean)))
-  (keyvalue
+    (boolean))
+  (key_value
     (identifier)
-    (value
-      (boolean)))
-  (keyvalue
+    (boolean))
+  (key_value
     (identifier)
-    (value
-      (boolean)))
-  (keyvalue
+    (boolean))
+  (key_value
     (identifier)
-    (value
-      (boolean))))
+    (boolean)))
 
 ================================================================================
-Cpp code block as a keyword value with "#{" and "#}" inside a string
+Macros
 ================================================================================
+
+var         $PO;
+var         $../../some/file/path;
+div(phi,U0) $..DK;
+div(phi,U1) $.. DK;
+div(phi,U2) $..DK Gauss;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (key_value
+    (identifier)
+    (macro
+      (identifier)))
+  (key_value
+    (identifier)
+    (macro
+      (prev_scope)
+      (identifier)))
+  (key_value
+    (identifier)
+    (macro
+      (prev_scope)
+      (identifier)))
+  (key_value
+    (identifier)
+    (macro
+      (prev_scope)
+      (identifier)))
+  (key_value
+    (identifier)
+    (macro
+      (prev_scope)
+      (identifier))
+    (identifier)))
+
+================================================================================
+Cpp code blocks
+================================================================================
+
+emptyCode #{  #};
 
 code
 #{
     /*
-       This will fail badly if "#{" shows up here outside a string literal
+       This will not fail if #{ shows up here outside a string literal
+       #} also works as expected
     */
     #include<vector>
     #include "someFile.H"
@@ -195,49 +236,16 @@ code
 --------------------------------------------------------------------------------
 
 (source_file
-  (keyvalue
+  (key_value
     (identifier)
-    (value
-      (code)))
-  (keyvalue
+    (code))
+  (key_value
     (identifier)
-    (value
-      (code)))
-  (keyvalue
+    (code
+      (comment)))
+  (key_value
     (identifier)
-    (value
-      (code))))
-
-================================================================================
-Identifiers with math operators in name
-================================================================================
-
-laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (keyvalue
+    (code))
+  (key_value
     (identifier)
-    (value
-      (word)
-      (word)
-      (word))))
-
-================================================================================
-Macros as filename paths
-================================================================================
-
-dict 
-{
-    $../../some/file/path
-}
-
---------------------------------------------------------------------------------
-
-(source_file
-  (dict
-    (identifier)
-    (macro
-      (prev_scope)
-      (identifier))))
+    (code)))

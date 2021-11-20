@@ -18,12 +18,12 @@
   "author": "Mohammed Elwardi Fadeli",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.15.0",
-    "tree-sitter-c": "^0.20.1",
-    "tree-sitter-cpp": "^0.20.0"
+    "nan": "^2.15.0"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.20.0"
+    "tree-sitter-cli": "^0.20.0",
+    "tree-sitter-c": "^0.20.1",
+    "tree-sitter-cpp": "^0.20.0"
   },
   "tree-sitter": [
     {
@@ -32,7 +32,8 @@
         "foam",
         "OpenFOAM"
       ],
-      "content-regex": "FoamFile"
+      "content-regex": "FoamFile",
+      "injection-regex": "^(foam|OpenFOAM)$"
     }
   ]
 }

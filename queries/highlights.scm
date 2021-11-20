@@ -9,7 +9,7 @@
         dict_body: (key_value keyword: (identifier) @type)
     (
         (#match? @property "FoamFile")
-        (#match? @type "version")
+        (#match? @type "^(version|format)$")
     )
     )
 )
@@ -80,12 +80,10 @@
 ; Literal numbers and strings
 (number_literal) @number
 (string_literal) @string
+(escape_sequence) @escape
 
 ; Treat [m^2 s-2] the same as if it was put in numbers format
 (dimensions dimension: (identifier) @number)
-
-; Parse dynamic code as with c++ parser
-(code (code_body) @injection.content (#set! injection.language "cpp"))
 
 ; operator-like words
 [

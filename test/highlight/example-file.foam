@@ -70,10 +70,11 @@ code
     points[0]  = point(0.5, 0, -0.5);
 #};
 
-#include "Windowsy path to file.cfg"
+#include "Windowsy path\\nto file.cfg"
 // <- attribute
 //   ^ attribute
 //           ^ string
+//                      ^ escape
 #   includeFunc writeObjects(d = gas)
 // <- attribute
 //   ^ attribute

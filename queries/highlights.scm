@@ -1,8 +1,7 @@
-
-; Comments
+;; Comments
 (comment) @comment
 
-; FoamFile dictionary; highlight all of its keywords
+;; FoamFile dictionary;; highlight all of its keywords
 (
     (dict
         key: (identifier) @property
@@ -24,7 +23,7 @@
     )
 )
 
-; FoamFile dictionary; Highlight class and object names as classes
+;; FoamFile dictionary;; Highlight class and object names as classes
 (
     (key_value
         keyword: (identifier) @type
@@ -40,7 +39,7 @@
     (#match? @type "object")
 )
 
-; Generic Key-value pairs and dictionary keywords
+;; Generic Key-value pairs and dictionary keywords
 (key_value
     keyword: (identifier) @function.method
     value: (identifier)* @variable.parameter
@@ -49,14 +48,14 @@
     key: (identifier) @function.method
 )
 
-; Macros
+;; Macros
 (macro
     (prev_scope)* @variable.builtin
     (identifier)* @variable.parameter
 )
 
 
-; Directives
+;; Directives
 "#" @attribute
 (preproc_call
     directive: (identifier)* @attribute
@@ -64,7 +63,7 @@
 )
 (
     (preproc_call
-        argument: (identifier)* @variable.parameter; (macro)* @variable.parameter
+        argument: (identifier)* @variable.parameter
     ) @attribute
     (#match? @attribute "ifeq")
 )
@@ -77,15 +76,15 @@
     (#match? @attribute "endif")
 )
 
-; Literal numbers and strings
+;; Literal numbers and strings
 (number_literal) @number
 (string_literal) @string
 (escape_sequence) @escape
 
-; Treat [m^2 s-2] the same as if it was put in numbers format
+;; Treat [m^2 s-2] the same as if it was put in numbers format
 (dimensions dimension: (identifier) @number)
 
-; operator-like words
+;; operator-like words
 [
     "and"
     "or"
@@ -94,7 +93,7 @@
 ] @attribute
 (boolean) @attribute
 
-; Punctuation
+;; Punctuation
 [
   "("
   ")"
@@ -109,4 +108,3 @@
 [
   ";"
 ] @punctuation.delimiter
-

@@ -6,9 +6,6 @@ Include directives
 #   includeFunc writeObjects(d = gas)
 #includeFunc fieldAverage(U.particles, U.air, alpha.particles, p)
 
-#if #calc "${angle} < 75"
-#else
-
 --------------------------------------------------------------------------------
 
 (source_file
@@ -20,13 +17,7 @@ Include directives
     (identifier))
   (preproc_call
     (identifier)
-    (identifier))
-  (preproc_call
-    (identifier)
-    (preproc_call
-      (identifier)
-      (string_literal)))
-  (preproc_call))
+    (identifier)))
 
 ================================================================================
 Calc/neg directives
@@ -136,7 +127,9 @@ lift  #codeStream
       (dict_headless
         (key_value
           (identifier)
-          (code))
+          (code
+            (code_body)))
         (key_value
           (identifier)
-          (code))))))
+          (code
+            (code_body)))))))

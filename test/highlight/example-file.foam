@@ -1,0 +1,113 @@
+/* Comment */
+FoamFile
+// <- property
+{
+// <- punctuation.bracket
+    version     2.0;
+    // <- type
+    //           ^ number
+    //             ^ punctuation.delimiter
+    format      ascii;
+    // <- type    ^ variable.parameter
+    class       vectorField;
+    // <- type    ^ class
+    object      kinematicCloudPositions;
+    // <- type    ^ class
+}
+// <- punctuation.bracket
+
+internalField uniform 0.0;
+// <- function.method
+//              ^ attribute
+//                       ^ punctuation.delimiter
+
+"list" (word 1 mor(2,phi(U)));
+// <- string
+//     ^ punctuation.bracket
+//           ^ number
+
+dict
+// <- function.method
+{
+    version     2.0;
+    div(phi,U1) K;
+    // <- function.method
+    laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
+    // <- function.method         ^ variable.parameter
+    //                                    ^ variable.parameter
+    //                                          ^ variable.parameter
+}
+
+(this and that)
+// <- punctuation.bracket
+//     ^ attribute
+//            ^ punctuation.bracket
+{
+    dimensions [1 -1 2 0 0 0];
+    // <- function.method
+    //         ^ punctuation.bracket
+    //             ^ number
+    //                      ^ punctuation.bracket
+    dimensions [m^2 s^-2];
+    // <- function.method
+    //         ^ punctuation.bracket
+    //              ^ number
+    //                  ^ punctuation.bracket
+    enable true;
+    //      ^ attribute
+    var $:dict.div(phi,U1);
+    //   ^ @variable.builtin
+    //       ^ @variable.parameter
+    env ${FOAM_TUTORIALS};
+    //       ^ @variable.parameter
+}
+
+code
+#{
+    /* Comment #{#} */
+    /* Another comment */
+    pointField points(30);
+    points[0]  = point(0.5, 0, -0.5);
+#};
+
+#include "Windowsy path to file.cfg"
+// <- attribute
+//   ^ attribute
+//           ^ string
+#   includeFunc writeObjects(d = gas)
+// <- attribute
+//   ^ attribute
+//                             ^ variable.parameter
+#includeFunc fieldAverage(U.particles, U.air, alpha.particles, p)
+// <- attribute
+//   ^ attribute
+//                                      ^ variable.parameter
+
+#if #calc "${angle} < 75"
+// <- attribute
+//   ^ attribute
+//           ^ string
+    default  Gauss linear corrected;
+#else
+// <- attribute
+// ^ attribute
+    default  Gauss linear limited corrected 0.5;
+    // <- function.method
+    //         ^ variable.parameter
+    //               ^ variable.parameter
+    //                       ^ variable.parameter
+    //                               ^ variable.parameter
+    //                                       ^ number
+#endif
+// <- attribute
+// ^ attribute
+
+#ifeq ${FOAM_APPLICATION} simpleFoam
+// <- attribute
+// ^ attribute
+//          ^ variable.parameter
+//                            ^ variable.parameter
+    default         steadyState;
+#endif
+// <- attribute
+// ^ attribute

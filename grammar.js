@@ -152,20 +152,19 @@ module.exports = grammar({
       // which is good, protecting against #} appearing a comment and messing things up
       code: $ => seq(
         '#{',
-        field("code_body",repeat(choice(
-          $.code,
-          token(/([^#\n"]|#[^{}\n]|"([^"\\]|\\.)+")+/),
-          $.string_literal
-        ))),
+        optional($.code_body),
         '#}',
       ),
+      code_body: $ => repeat1(choice(
+          token(/([^#\n"]|#[^{}\n]|"([^"\\]|\\.)+")+/),
+          $.string_literal
+      )),
 
       // OpenFOAM macros; currently, also reads file paths
       macro: $ => choice($._macro_braces, $._macro_no_braces),
 
       _macro_braces: $ => seq(
-          '$',
-          token.immediate('{'),
+          '${',
           optional($.prev_scope),
           $.identifier,
           token.immediate('}')
@@ -224,6 +223,14 @@ module.exports = grammar({
       // OpenFOAM identifiers
       // This pretty much matches anything a crazy programmer can thinkup for a keyword name;
       // The only requirement is the 1st character, just to avoid conflicts with other rules
-      identifier: $ => prec(-20, seq(/[a-zA-Z_]/, optional($._identifier))),
+      // Also, match specific keywords for better highlighting
+      identifier: $ => prec(-20, choice(
+        seq(/[a-zA-Z_]/, optional($._identifier)),
+        choice(
+            'version', 'format', 'class', 'object',
+            'internalField', 'boundaryField', 'uniform', 'non-uniform',
+            'and', 'or'
+        )
+      )),
     }
 });

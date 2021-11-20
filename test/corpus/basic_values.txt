@@ -242,10 +242,13 @@ code
   (key_value
     (identifier)
     (code
-      (comment)))
+      (comment)
+      (code_body)))
   (key_value
     (identifier)
-    (code))
+    (code
+      (code_body)))
   (key_value
     (identifier)
-    (code)))
+    (code
+      (code_body))))

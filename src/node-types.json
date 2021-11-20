@@ -7,21 +7,31 @@
   {
     "type": "code",
     "named": true,
-    "fields": {
-      "code_body": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "code",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "code_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "code_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -693,6 +703,10 @@
     "named": false
   },
   {
+    "type": "${",
+    "named": false
+  },
+  {
     "type": "(",
     "named": false
   },
@@ -721,6 +735,18 @@
     "named": false
   },
   {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "boundaryField",
+    "named": false
+  },
+  {
+    "type": "class",
+    "named": false
+  },
+  {
     "type": "escape_sequence",
     "named": true
   },
@@ -729,8 +755,24 @@
     "named": false
   },
   {
+    "type": "format",
+    "named": false
+  },
+  {
+    "type": "internalField",
+    "named": false
+  },
+  {
+    "type": "non-uniform",
+    "named": false
+  },
+  {
     "type": "number_literal",
     "named": true
+  },
+  {
+    "type": "object",
+    "named": false
   },
   {
     "type": "off",
@@ -738,6 +780,10 @@
   },
   {
     "type": "on",
+    "named": false
+  },
+  {
+    "type": "or",
     "named": false
   },
   {
@@ -754,6 +800,14 @@
   },
   {
     "type": "u8\"",
+    "named": false
+  },
+  {
+    "type": "uniform",
+    "named": false
+  },
+  {
+    "type": "version",
     "named": false
   },
   {

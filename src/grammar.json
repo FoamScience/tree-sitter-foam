@@ -21,11 +21,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_non_uniform_list"
+          "name": "dict"
         },
         {
           "type": "SYMBOL",
-          "name": "dict"
+          "name": "_non_uniform_list"
         }
       ]
     },
@@ -664,37 +664,41 @@
           "value": "#{"
         },
         {
-          "type": "FIELD",
-          "name": "code_body",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "code"
-                },
-                {
-                  "type": "TOKEN",
-                  "content": {
-                    "type": "PATTERN",
-                    "value": "([^#\\n\"]|#[^{}\\n]|\"([^\"\\\\]|\\\\.)+\")+"
-                  }
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "string_literal"
-                }
-              ]
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "code_body"
+            },
+            {
+              "type": "BLANK"
             }
-          }
+          ]
         },
         {
           "type": "STRING",
           "value": "#}"
         }
       ]
+    },
+    "code_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "([^#\\n\"]|#[^{}\\n]|\"([^\"\\\\]|\\\\.)+\")+"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "string_literal"
+          }
+        ]
+      }
     },
     "macro": {
       "type": "CHOICE",
@@ -714,14 +718,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "$"
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "{"
-          }
+          "value": "${"
         },
         {
           "type": "CHOICE",
@@ -969,21 +966,71 @@
       "type": "PREC",
       "value": -20,
       "content": {
-        "type": "SEQ",
+        "type": "CHOICE",
         "members": [
           {
-            "type": "PATTERN",
-            "value": "[a-zA-Z_]"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[a-zA-Z_]"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_identifier"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
           },
           {
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "_identifier"
+                "type": "STRING",
+                "value": "version"
               },
               {
-                "type": "BLANK"
+                "type": "STRING",
+                "value": "format"
+              },
+              {
+                "type": "STRING",
+                "value": "class"
+              },
+              {
+                "type": "STRING",
+                "value": "object"
+              },
+              {
+                "type": "STRING",
+                "value": "internalField"
+              },
+              {
+                "type": "STRING",
+                "value": "boundaryField"
+              },
+              {
+                "type": "STRING",
+                "value": "uniform"
+              },
+              {
+                "type": "STRING",
+                "value": "non-uniform"
+              },
+              {
+                "type": "STRING",
+                "value": "and"
+              },
+              {
+                "type": "STRING",
+                "value": "or"
               }
             ]
           }

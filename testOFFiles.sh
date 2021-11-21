@@ -49,10 +49,11 @@ function timeTreeSitterCommand()
         echo "Pass: $1 "$(printf "%.3f" $result)
     else
         echo "Fail: $1 "$(printf "%.3f" $result)
-        coords=$(npx tree-sitter parse $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
-        line=$(echo $coords | awk -F, '{print($1+1)}')
-        colu=$(echo $coords | awk -F, '{print($2+1)}')
-        vim "+call cursor($line, $colu)" $1
+        # Uncomment to edit failing file at failing position
+        #coords=$(npx tree-sitter parse $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
+        #line=$(echo $coords | awk -F, '{print($1+1)}')
+        #colu=$(echo $coords | awk -F, '{print($2+1)}')
+        #vim "+call cursor($line, $colu)" $1
         exit 1
     fi
 }

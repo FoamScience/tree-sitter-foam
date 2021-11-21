@@ -1,65 +1,63 @@
 /* Comment */
+// <- comment
 FoamFile
-// <- property
+// <- type
 {
-// <- punctuation.bracket
+// <- punctuation
     version     2.0;
-    // <- type
-    //           ^ number
-    //             ^ punctuation.delimiter
+    // <- function
+    //           ^ float
+    //             ^ punctuation
     format      ascii;
-    // <- type    ^ variable.parameter
+    // <- function
     class       vectorField;
-    // <- type    ^ class
+    // <- function
     object      kinematicCloudPositions;
-    // <- type    ^ class
+    // <- function
 }
-// <- punctuation.bracket
+// <- punctuation
 
 internalField uniform 0.0;
-// <- function.method
+// <- function
 //              ^ attribute
-//                       ^ punctuation.delimiter
+//                       ^ punctuation
 
-"list" (word 1 mor(2,phi(U)));
+"(list|.*Wall)" (word 1 mor(2,phi(U)));
 // <- string
-//     ^ punctuation.bracket
-//           ^ number
+//              ^ punctuation
+//                    ^ float
 
 dict
-// <- function.method
+// <- type
 {
-    version     2.0;
+    class       vectorField;
     div(phi,U1) K;
-    // <- function.method
+    // <- function
     laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
-    // <- function.method         ^ variable.parameter
-    //                                    ^ variable.parameter
-    //                                          ^ variable.parameter
+    // <- function
 }
 
 (this and that)
-// <- punctuation.bracket
+// <- punctuation
 //     ^ attribute
-//            ^ punctuation.bracket
+//            ^ punctuation
 {
     dimensions [1 -1 2 0 0 0];
-    // <- function.method
-    //         ^ punctuation.bracket
-    //             ^ number
-    //                      ^ punctuation.bracket
+    // <- function
+    //         ^ punctuation
+    //             ^ float
+    //                      ^ punctuation
     dimensions [m^2 s^-2];
-    // <- function.method
-    //         ^ punctuation.bracket
-    //              ^ number
-    //                  ^ punctuation.bracket
+    // <- function
+    //         ^ punctuation
+    //              ^ float
+    //                  ^ punctuation
     enable true;
     //      ^ attribute
-    var $:dict.div(phi,U1);
-    //   ^ @variable.builtin
-    //       ^ @variable.parameter
+    variable $:dict.div(phi,U1);
+    //       ^ conditional
+    //        ^ conditional
     env ${FOAM_TUTORIALS};
-    //       ^ @variable.parameter
 }
 
 code
@@ -71,44 +69,36 @@ code
 #};
 
 #include "Windowsy path\\nto file.cfg"
-// <- attribute
-//   ^ attribute
+// <- conditional
+//   ^ conditional
 //           ^ string
 //                      ^ escape
 #   includeFunc writeObjects(d = gas)
-// <- attribute
-//   ^ attribute
-//                             ^ variable.parameter
+// <- conditional
+//   ^ conditional
 #includeFunc fieldAverage(U.particles, U.air, alpha.particles, p)
-// <- attribute
-//   ^ attribute
-//                                      ^ variable.parameter
+// <- conditional
+//   ^ conditional
 
 #if #calc "${angle} < 75"
-// <- attribute
-//   ^ attribute
+// <- conditional
+//   ^ conditional
 //           ^ string
     default  Gauss linear corrected;
 #else
-// <- attribute
-// ^ attribute
+// <- conditional
+// ^ conditional
     default  Gauss linear limited corrected 0.5;
-    // <- function.method
-    //         ^ variable.parameter
-    //               ^ variable.parameter
-    //                       ^ variable.parameter
-    //                               ^ variable.parameter
-    //                                       ^ number
+    // <- function
+    //                                       ^ float
 #endif
-// <- attribute
-// ^ attribute
+// <- conditional
+// ^ conditional
 
 #ifeq ${FOAM_APPLICATION} simpleFoam
-// <- attribute
-// ^ attribute
-//          ^ variable.parameter
-//                            ^ variable.parameter
+// <- conditional
+// ^ conditional
     default         steadyState;
 #endif
-// <- attribute
-// ^ attribute
+// <- conditional
+// ^ conditional

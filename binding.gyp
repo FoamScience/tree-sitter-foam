@@ -15,6 +15,9 @@
       "cflags_c": [
         "-std=c++11",
       ]
+      "cflags_cc": [
+        "-std=c++11",
+      ]
     }
   ]
 }

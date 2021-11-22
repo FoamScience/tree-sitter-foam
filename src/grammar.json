@@ -26,6 +26,14 @@
         {
           "type": "SYMBOL",
           "name": "_non_uniform_list"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_uniform_list"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number_literal"
         }
       ]
     },
@@ -988,51 +996,6 @@
                 ]
               }
             ]
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "version"
-              },
-              {
-                "type": "STRING",
-                "value": "format"
-              },
-              {
-                "type": "STRING",
-                "value": "class"
-              },
-              {
-                "type": "STRING",
-                "value": "object"
-              },
-              {
-                "type": "STRING",
-                "value": "internalField"
-              },
-              {
-                "type": "STRING",
-                "value": "boundaryField"
-              },
-              {
-                "type": "STRING",
-                "value": "uniform"
-              },
-              {
-                "type": "STRING",
-                "value": "non-uniform"
-              },
-              {
-                "type": "STRING",
-                "value": "and"
-              },
-              {
-                "type": "STRING",
-                "value": "or"
-              }
-            ]
           }
         ]
       }
@@ -1063,6 +1026,10 @@
     ],
     [
       "preproc_call",
+      "_non_uniform_list"
+    ],
+    [
+      "_statement",
       "_non_uniform_list"
     ],
     [

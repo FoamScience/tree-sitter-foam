@@ -106,6 +106,14 @@
           {
             "type": "string_literal",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       },
@@ -266,6 +274,14 @@
           {
             "type": "string_literal",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       },
@@ -661,6 +677,10 @@
           "named": true
         },
         {
+          "type": "number_literal",
+          "named": true
+        },
+        {
           "type": "preproc_call",
           "named": true
         }
@@ -735,18 +755,6 @@
     "named": false
   },
   {
-    "type": "and",
-    "named": false
-  },
-  {
-    "type": "boundaryField",
-    "named": false
-  },
-  {
-    "type": "class",
-    "named": false
-  },
-  {
     "type": "escape_sequence",
     "named": true
   },
@@ -755,24 +763,8 @@
     "named": false
   },
   {
-    "type": "format",
-    "named": false
-  },
-  {
-    "type": "internalField",
-    "named": false
-  },
-  {
-    "type": "non-uniform",
-    "named": false
-  },
-  {
     "type": "number_literal",
     "named": true
-  },
-  {
-    "type": "object",
-    "named": false
   },
   {
     "type": "off",
@@ -780,10 +772,6 @@
   },
   {
     "type": "on",
-    "named": false
-  },
-  {
-    "type": "or",
     "named": false
   },
   {
@@ -800,14 +788,6 @@
   },
   {
     "type": "u8\"",
-    "named": false
-  },
-  {
-    "type": "uniform",
-    "named": false
-  },
-  {
-    "type": "version",
     "named": false
   },
   {

@@ -39,17 +39,8 @@
 (string_literal) @string
 (escape_sequence) @escape
 
-;; Treat [m^2 s-2] the same as if it was put in numbers format
+;; Treat [m^2 s^-2] the same as if it was put in numbers format
 (dimensions dimension: (identifier) @float)
-
-;; operator-like words
-[
-    "and"
-    "or"
-    "uniform"
-    "non-uniform"
-] @attribute
-(boolean) @attribute
 
 ;; Punctuation
 [
@@ -63,3 +54,9 @@
   "#}"
   ";"
 ] @punctuation
+
+;; Special identifiers
+([(identifier) (boolean)] @attribute
+(#match? @attribute "^(uniform|non-uniform|and|or|on|off|true|false)$")
+)
+

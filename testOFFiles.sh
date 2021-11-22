@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Tests the parser on all tutorial files which claim to be OpenFOAM dictionaries
+# Does not a working OpenFOAM installation but point $FOAM_TUTORIALS to the testing directory
 
 # Generate the grammar
 echo "Generating the parser"
@@ -16,8 +17,11 @@ npx tree-sitter parse test/highlight/example-file.foam 2&>1 > /dev/null
 doesNotContain()
 {
     # Files that are known to fail, faulty from source
-    declare -A failingFiles=([/opt/openfoam8/tutorials/lagrangian/MPPICFoam/column/constant/kinematicCloudPositions]=
-    [/opt/openfoam8/tutorials/incompressible/pimpleFoam/RAS/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=)
+    declare -A failingFiles=(["$FOAM_TUTORIALS"/lagrangian/MPPICFoam/column/constant/kinematicCloudPositions]=
+    ["$FOAM_TUTORIALS"/incompressible/pimpleFoam/RAS/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
+    ["$FOAM_TUTORIALS"/incompressible/pimpleDyMFoam/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
+    ["$FOAM_TUTORIALS"/solidMechanics/elasticIncrSolidFoam/slidingFrictionBallIncr/0/DU]=
+    )
 
     #[[ $1 =~ (^|[[:space:]])"$2"($|[[:space:]]) ]] && return 1 || return 0
     [[ -v failingFiles["$1"] ]] && return 1 || return 0
@@ -50,16 +54,16 @@ function timeTreeSitterCommand()
     else
         echo "Fail: $1 "$(printf "%.3f" $result)
         # Uncomment to edit failing file at failing position
-        #coords=$(npx tree-sitter parse $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
-        #line=$(echo $coords | awk -F, '{print($1+1)}')
-        #colu=$(echo $coords | awk -F, '{print($2+1)}')
-        #vim "+call cursor($line, $colu)" $1
+        coords=$(npx tree-sitter parse $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
+        line=$(echo $coords | awk -F, '{print($1+1)}')
+        colu=$(echo $coords | awk -F, '{print($2+1)}')
+        vim "+call cursor($line, $colu)" $1
         exit 1
     fi
 }
 
-# All potential files
-files=$(find /opt/openfoam8/tutorials -not -name "*.m4" -type f)
+# All potential files; skips deprecatedTutorials from FE4 tree
+files=$(find $FOAM_TUTORIALS -not -name "*.m4" -not -iwholename "*/deprecatedTutorials/*" -type f)
 
 for fl in $files
 do

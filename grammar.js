@@ -14,6 +14,7 @@ module.exports = grammar({
       [$._uniform_list, $._value, ],
       [$._statement, $.dict_headless, ],
       [$.preproc_call, $._non_uniform_list],
+      [$._statement, $._non_uniform_list],
       [$._non_uniform_list, ],
       [$.dict, ],
     ],
@@ -41,6 +42,8 @@ module.exports = grammar({
 
           // Special support for uncommon things which may appear as statements
           $._non_uniform_list,
+          $._uniform_list,
+          $.number_literal,
       ),
 
       // OpenFOAM Dictionaries
@@ -223,14 +226,8 @@ module.exports = grammar({
       // OpenFOAM identifiers
       // This pretty much matches anything a crazy programmer can thinkup for a keyword name;
       // The only requirement is the 1st character, just to avoid conflicts with other rules
-      // Also, match specific keywords for better highlighting
       identifier: $ => prec(-20, choice(
-        seq(/[a-zA-Z_]/, optional($._identifier)),
-        choice(
-            'version', 'format', 'class', 'object',
-            'internalField', 'boundaryField', 'uniform', 'non-uniform',
-            'and', 'or'
-        )
+        seq(/[a-zA-Z_]/, optional($._identifier))
       )),
     }
 });

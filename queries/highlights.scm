@@ -59,4 +59,3 @@
 ([(identifier) (boolean)] @attribute
 (#match? @attribute "^(uniform|non-uniform|and|or|on|off|true|false)$")
 )
-

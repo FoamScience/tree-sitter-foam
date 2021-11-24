@@ -14,20 +14,21 @@ and feasible symbols extraction.
 
 ## Features
 
-- Semantic understanding of OpenFOAM IO entries (Dictionaries, key-value pairs)
-- Basic syntax highlighting (Targeting [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) mainly)
-- Highlighting of C++ code blocks and regular expressions (Also, keywords
-  are highlighting using Golang grammar), so if your client does not install
-  those grammars automatically, you might have to install them manually
+- Semantic understanding of OpenFOAM IO entries (Dictionaries, key-value pairs, ... etc)
+- Syntax highlighting (Targeting [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) mainly)
+- Highlighting of C++ code blocks and regular expressions, so if your client does not install
+  those parsers automatically, you might have to install them manually
 - Scope-awareness is there (Per-dictionary) although not used yet
+- Text-objects for dictionaries and key-value pairs to use with (Neo)Vim
+- Expression-based folding
 
 ## Running tests
 
 - Unit tests for both parsing and highlighting are executed with `tree-sitter test`
   (Check the `test` folder)
-- `testOFFiles.sh` parses all OpenFOAM dictionaries in a directory
-    - Currently, the parser works on almost all OpenFOAM 8 tutorial files
-      (Well, two files are faulty from source!)
+- `testOFFiles.sh $FOAM_TUTORIALS` parses all OpenFOAM dictionaries in the tutorials directory
+    - Currently, the parser works on almost all OpenFOAM 8 and Foam-Extend 4 tutorial files
+      (Well, some files are faulty from source!)
 
 ## Contributing
 

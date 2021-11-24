@@ -3,6 +3,8 @@
 # Tests the parser on all tutorial files which claim to be OpenFOAM dictionaries
 # Does not a working OpenFOAM installation but point $FOAM_TUTORIALS to the testing directory
 
+TESTS_DIR="$1"
+
 # Generate the grammar
 echo "Generating the parser"
 npx tree-sitter generate
@@ -17,10 +19,10 @@ npx tree-sitter parse test/highlight/example-file.foam 2&>1 > /dev/null
 doesNotContain()
 {
     # Files that are known to fail, faulty from source
-    declare -A failingFiles=(["$FOAM_TUTORIALS"/lagrangian/MPPICFoam/column/constant/kinematicCloudPositions]=
-    ["$FOAM_TUTORIALS"/incompressible/pimpleFoam/RAS/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
-    ["$FOAM_TUTORIALS"/incompressible/pimpleDyMFoam/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
-    ["$FOAM_TUTORIALS"/solidMechanics/elasticIncrSolidFoam/slidingFrictionBallIncr/0/DU]=
+    declare -A failingFiles=(["$TESTS_DIR"/lagrangian/MPPICFoam/column/constant/kinematicCloudPositions]=
+    ["$TESTS_DIR"/incompressible/pimpleFoam/RAS/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
+    ["$TESTS_DIR"/incompressible/pimpleDyMFoam/wingMotion/wingMotion_snappyHexMesh/system/controlDict]=
+    ["$TESTS_DIR"/solidMechanics/elasticIncrSolidFoam/slidingFrictionBallIncr/0/DU]=
     )
 
     #[[ $1 =~ (^|[[:space:]])"$2"($|[[:space:]]) ]] && return 1 || return 0
@@ -63,7 +65,7 @@ function timeTreeSitterCommand()
 }
 
 # All potential files; skips deprecatedTutorials from FE4 tree
-files=$(find $FOAM_TUTORIALS -not -name "*.m4" -not -iwholename "*/deprecatedTutorials/*" -type f)
+files=$(find $TESTS_DIR -not -name "*.m4" -not -iwholename "*/deprecatedTutorials/*" -type f)
 
 for fl in $files
 do

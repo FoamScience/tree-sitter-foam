@@ -50,10 +50,13 @@ module.exports = grammar({
       dict: $ => seq(
           field("key", choice($.identifier, $.string_literal, $.list)),
           '{',
-          field("dict_body", repeat(choice($._statement, seq($.macro, optional(';'))))),
+          optional($.dict_core),
           alias(token(prec(-1, '}')), '}'),
           optional(';') // This shouldn't be here; but oh well; FE4 tutorials had some
       ),
+      dict_core: $ => prec.left(3,seq(
+          field("dict_body", repeat1(choice($._statement, seq($.macro, optional(';'))))),
+      )),
 
       // OpenFOAM Key-Value pairs
       key_value: $ => seq(

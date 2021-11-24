@@ -38,31 +38,35 @@ dict
     (identifier))
   (dict
     (identifier)
-    (key_value
-      (identifier)
-      (number_literal))
-    (key_value
-      (identifier)
-      (string_literal)))
+    (dict_core
+      (key_value
+        (identifier)
+        (number_literal))
+      (key_value
+        (identifier)
+        (string_literal))))
   (dict
     (identifier)
     (comment)
-    (dict
-      (identifier)
+    (dict_core
+      (dict
+        (identifier)
+        (dict_core
+          (key_value
+            (identifier)
+            (number_literal))))
+      (comment)
+      (dict
+        (string_literal)
+        (dict_core
+          (key_value
+            (identifier)
+            (number_literal))))
+      (macro
+        (identifier))
       (key_value
         (identifier)
-        (number_literal)))
-    (comment)
-    (dict
-      (string_literal)
-      (key_value
-        (identifier)
-        (number_literal)))
-    (macro
-      (identifier))
-    (key_value
-      (identifier)
-      (number_literal))))
+        (number_literal)))))
 
 ================================================================================
 Dictionary with comment after identifier
@@ -79,9 +83,10 @@ dict // description
   (dict
     (identifier)
     (comment)
-    (key_value
-      (identifier)
-      (identifier))))
+    (dict_core
+      (key_value
+        (identifier)
+        (identifier)))))
 
 ================================================================================
 Dictionaries as parts of keyword values
@@ -103,18 +108,19 @@ default CrankNicolson ocCoeff
     (identifier)
     (dict
       (identifier)
-      (key_value
-        (identifier)
-        (identifier))
-      (key_value
-        (identifier)
-        (identifier))
-      (key_value
-        (identifier)
-        (number_literal))
-      (key_value
-        (identifier)
-        (number_literal)))))
+      (dict_core
+        (key_value
+          (identifier)
+          (identifier))
+        (key_value
+          (identifier)
+          (identifier))
+        (key_value
+          (identifier)
+          (number_literal))
+        (key_value
+          (identifier)
+          (number_literal))))))
 
 ================================================================================
 Lists of dictionaries with list-like keywords
@@ -214,9 +220,10 @@ Dictionaries with list-like keys
       (identifier)
       (identifier)
       (identifier))
-    (key_value
-      (identifier)
-      (identifier))
-    (key_value
-      (identifier)
-      (number_literal))))
+    (dict_core
+      (key_value
+        (identifier)
+        (identifier))
+      (key_value
+        (identifier)
+        (number_literal)))))

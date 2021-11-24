@@ -1,4 +1,6 @@
-(dict) @local.scope
+(dict) @scope
 
-(key_value keyword: (_) @local.definition)
-(key_value value: (macro (identifier)*)* @local.reference)
+(dict key: (_) @definition.type)
+
+(key_value keyword: (_) @definition.parameter)
+(key_value value: (macro (identifier)*)* @reference)

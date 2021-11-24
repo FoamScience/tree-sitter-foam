@@ -13,7 +13,10 @@
         # If your language uses an external scanner, add it here.
       ],
       "cflags_cc": [
-        "-std=c++14",
+        "--std=c++14",
+      ],
+      "cflags_ellcc": [
+        "--std=c++14",
       ]
     }
   ]

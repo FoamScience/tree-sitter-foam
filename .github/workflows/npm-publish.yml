@@ -17,7 +17,7 @@ jobs:
           node-version: 14
       - run: npm install --save-dev
       - run: npm ci
-      - run: npm test
+        #- run: npm test
 
   publish-npm:
     needs: build

@@ -3,7 +3,8 @@
   "}"
 ] @branch
 
-(key_value value: (_)* @indent)
+[(dict) (key_value)] @indent
+
 
 [
   (comment)

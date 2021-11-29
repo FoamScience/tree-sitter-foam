@@ -1,5 +1,8 @@
+use std::path::Path;
+extern crate cc;
+
 fn main() {
-    let src_dir = std::path::Path::new("src");
+    let src_dir = Path::new("src");
 
     let mut c_config = cc::Build::new();
     c_config.include(&src_dir);
@@ -33,6 +36,6 @@ fn main() {
         .flag_if_supported("-Wno-unused-but-set-variable");
     let scanner_path = src_dir.join("scanner.cc");
     cpp_config.file(&scanner_path);
-    cpp_config.compile("scanner");
     println!("cargo:rerun-if-changed={}", scanner_path.to_str().unwrap());
+    cpp_config.compile("parser-scanner");
 }

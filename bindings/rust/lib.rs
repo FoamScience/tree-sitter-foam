@@ -35,10 +35,12 @@ pub const NODE_TYPES: &'static str = include_str!("../../src/node-types.json");
 
 // Uncomment these to include any queries that this grammar contains
 
-// pub const HIGHLIGHTS_QUERY: &'static str = include_str!("../../queries/highlights.scm");
-// pub const INJECTIONS_QUERY: &'static str = include_str!("../../queries/injections.scm");
-// pub const LOCALS_QUERY: &'static str = include_str!("../../queries/locals.scm");
-// pub const TAGS_QUERY: &'static str = include_str!("../../queries/tags.scm");
+/// The source of the JavaScript tree-sitter grammar description.
+pub const GRAMMAR: &'static str = include_str!("../../grammar.js");
+pub const HIGHLIGHTS_QUERY: &'static str = include_str!("../../queries/highlights.scm");
+pub const INJECTIONS_QUERY: &'static str = include_str!("../../queries/injections.scm");
+pub const LOCALS_QUERY: &'static str = include_str!("../../queries/locals.scm");
+//pub const TAGS_QUERY: &'static str = include_str!("../../queries/tags.scm");
 
 #[cfg(test)]
 mod tests {

@@ -22,6 +22,13 @@ module.exports = grammar({
     // Tell the external scanner to figure out identifiers
     externals: $ => [
       $._identifier,
+      // Boolean values mentioned here for highlighting
+      $._on_label,
+      $._off_label,
+      $._true_label,
+      $._false_label,
+      $._yes_label,
+      $._no_label,
     ],
 
     // Our extras are C's extras
@@ -187,7 +194,12 @@ module.exports = grammar({
 
       // OpenFOAM boolean-like values
       boolean: $ => choice(
-          'on', 'off', 'true', 'false'
+          alias($._on_label, 'on'),
+          alias($._off_label, 'off'),
+          alias($._true_label, 'true'),
+          alias($._false_label, 'false'),
+          alias($._yes_label, 'yes'),
+          alias($._no_label, 'no'),
       ),
 
       // Primitive floating number
@@ -230,6 +242,7 @@ module.exports = grammar({
       // This pretty much matches anything a crazy programmer can thinkup for a keyword name;
       // The only requirement is the 1st character, just to avoid conflicts with other rules
       identifier: $ => prec(-20, choice(
+        $.boolean,
         seq(/[a-zA-Z_]/, optional($._identifier))
       )),
     }

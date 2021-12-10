@@ -154,16 +154,16 @@ option4 false;
 (source_file
   (key_value
     (identifier)
-    (boolean))
+    (identifier))
   (key_value
     (identifier)
-    (boolean))
+    (identifier))
   (key_value
     (identifier)
-    (boolean))
+    (identifier))
   (key_value
     (identifier)
-    (boolean)))
+    (identifier)))
 
 ================================================================================
 Macros

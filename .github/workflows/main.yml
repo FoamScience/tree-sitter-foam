@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - test-macos
   pull_request:
     branches:
       - master

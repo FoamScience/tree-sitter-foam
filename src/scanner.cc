@@ -63,18 +63,18 @@ bool debug_next_token = false;
  * Print to stderr if the `debug` flag is `true`.
  */
 struct Log {
-  template<class A> void operator()(A msg) { if (debug) cerr << msg << endl; }
+  template<class A> void operator()(A msg) { /*if (debug) cerr << msg << endl;*/ }
 } logger;
 
 struct Endl {} nl;
 
 template<class A> Log & operator<<(Log & l, const A & a) {
-  if (debug) cerr << a;
+  /*if (debug) cerr << a;*/
   return l;
 }
 
 Log & operator<<(Log & l, Endl) {
-  if (debug) cerr << endl;
+  /*if (debug) cerr << endl;*/
   return l;
 }
 

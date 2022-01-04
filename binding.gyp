@@ -7,17 +7,14 @@
         "src"
       ],
       "sources": [
-        "bindings/node/binding.cc",
         "src/parser.c",
+        "bindings/node/binding.cc",
         "src/scanner.cc",
         # If your language uses an external scanner, add it here.
       ],
       "cflags_cc": [
-        "--std=c++14",
+        "-lstdc++", "--std=c++14"
       ],
-      "cflags_ellcc": [
-        "--std=c++14",
-      ]
     }
   ]
 }

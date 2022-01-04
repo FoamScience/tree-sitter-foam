@@ -9,11 +9,11 @@
       "sources": [
         "src/parser.c",
         "bindings/node/binding.cc",
-        "src/scanner.cc",
+        "src/scanner.c",
         # If your language uses an external scanner, add it here.
       ],
       "cflags_cc": [
-        "-lstdc++", "--std=c++14"
+        "-std=c99"
       ],
     }
   ]

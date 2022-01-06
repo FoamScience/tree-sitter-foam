@@ -508,7 +508,7 @@ static Result eof(State *state) {
  * the last identifier being "line(12,13)"
  */
 static Result read_while_identifier(State *state) {
-    char s[1024] = "";
+    char s[1024];
     bool finished = false;
     int32_t nesting_level = 0;
     uint32_t c = PEEK;
@@ -518,7 +518,7 @@ static Result read_while_identifier(State *state) {
     if (non_identifier_char(c) || c == '(' || c == ')') {
         return res_fail;
     }
-    strcat(s, (const char*)&c);
+    s[strlen(s)] = (char) c;
     if (strlen(s) == 0) {
         return res_empty;
     }
@@ -554,7 +554,7 @@ static Result read_while_identifier(State *state) {
                 break;
             }
         }
-        strcat(s, (const char*)&c);
+        s[strlen(s)] = (char) c;
         state->lexer->advance(state->lexer, false);
     }
 

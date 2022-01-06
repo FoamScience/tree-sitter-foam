@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-foam",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Tree sitter grammer for OpenFOAM dictionaries",
   "main": "bindings/node",
   "homepage": "https://github.com/FoamScience/tree-sitter-foam#readme",

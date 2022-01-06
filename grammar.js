@@ -38,7 +38,7 @@ module.exports = grammar({
     ],
 
     rules: {
-      source_file: $ => repeat($._statement),
+      foam: $ => repeat($._statement),
 
       // Global statements in a dictionary
       _statement: $ => choice(

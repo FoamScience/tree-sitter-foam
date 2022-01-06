@@ -242,8 +242,8 @@ code
   (key_value
     (identifier)
     (code
-      (comment)
-      (code_body)))
+      (code_body
+        (comment))))
   (key_value
     (identifier)
     (code

@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - pure_c_scanner
   pull_request:
     branches:
       - master
@@ -12,8 +13,8 @@ jobs:
     strategy:
       matrix:
         #os: [windows-latest, ubuntu-latest, macos-latest]
-        os: [ubuntu-latest, macos-latest]
-      fail-fast: true
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      #fail-fast: true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -21,5 +22,9 @@ jobs:
           node-version: 14
       - run: npm install
       - run: node_modules/.bin/tree-sitter test
-        env:
-          CXX: g++-9
+      - uses: docker-practice/actions-setup-docker@master
+      - run: node_modules/.bin/tree-sitter build-wasm
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wasm-file
+          path: tree-sitter-foam.wasm

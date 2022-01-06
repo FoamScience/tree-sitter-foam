@@ -5,8 +5,8 @@
 #include "tree_sitter/parser.h"
 #include <assert.h>
 //#ifdef DEBUG
-#include <stdint.h>
-#include <stdio.h>
+//#include <stdint.h>
+//#include <stdio.h>
 //#endif
 #include <string.h>
 #include <stdbool.h>

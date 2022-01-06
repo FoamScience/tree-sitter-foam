@@ -9,7 +9,7 @@ Comments
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (comment)
   (comment))
 
@@ -21,7 +21,7 @@ number ;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)))
 
@@ -34,7 +34,7 @@ dimensions [m^2 s^-2];
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (dimensions
@@ -58,7 +58,7 @@ scheme gauss something 1.0;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (identifier)
@@ -75,7 +75,7 @@ key "Cool string\\n with spaces";
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (string_literal))
@@ -100,7 +100,7 @@ number -5.0E-13;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (number_literal))
@@ -127,7 +127,7 @@ laplacian((1|A(U+v)*D-mT),p) Gauss linear corrected;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (identifier))
@@ -151,7 +151,7 @@ option4 false;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (identifier))
@@ -177,7 +177,7 @@ div(phi,U2) $..DK Gauss;
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (macro
@@ -235,7 +235,7 @@ code
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (code))

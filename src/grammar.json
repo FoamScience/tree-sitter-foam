@@ -1,7 +1,7 @@
 {
   "name": "foam",
   "rules": {
-    "source_file": {
+    "foam": {
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",

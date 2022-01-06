@@ -27,19 +27,18 @@ node_modules/web-tree-sitter:
 
 # build web version of tree-sitter-foam
 # NOTE: requires patched version of web-tree-sitter
-tree-sitter-foam.wasm: src/parser.c src/scanner.cc
+tree-sitter-foam.wasm: src/parser.c src/scanner.c
 	npx tree-sitter build-wasm
 
 CC := cc
 OURCFLAGS := -shared -fPIC -g -O0 -I src
-CPPFLAGS := --std=c++14
 
 clean:
 	rm -f debug *.o *.a
 
 debug.so: src/parser.c src/scanner.cc
 	$(CC) $(OURCFLAGS) $(CFLAGS) -o parser.o src/parser.c
-	$(CC) $(OURCFLAGS) $(CFLAGS) $(CPPFLAGS) -o scanner.o src/scanner.cc
+	$(CC) $(OURCFLAGS) $(CFLAGS) -o scanner.o src/scanner.cc
 	$(CC) $(OURCFLAGS) $(CFLAGS) -o debug.so $(PWD)/scanner.o $(PWD)/parser.o
 	rm -f $(HOME)/.cache/tree-sitter/lib/foam.so
 	cp $(PWD)/debug.so $(HOME)/.cache/tree-sitter/lib/foam.so

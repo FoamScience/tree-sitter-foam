@@ -33,7 +33,7 @@ dict
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (dict
     (identifier))
   (dict
@@ -79,7 +79,7 @@ dict // description
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (dict
     (identifier)
     (comment)
@@ -102,7 +102,7 @@ default CrankNicolson ocCoeff
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (identifier)
@@ -141,7 +141,7 @@ boundary
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (list
@@ -181,7 +181,7 @@ boundary
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (list
@@ -214,7 +214,7 @@ Dictionaries with list-like keys
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (dict
     (list
       (identifier)

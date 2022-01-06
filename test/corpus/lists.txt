@@ -6,7 +6,7 @@ list 5{0};
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (list
@@ -23,7 +23,7 @@ l (5 item word);
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (identifier)
@@ -55,7 +55,7 @@ list (
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (key_value
     (identifier)
     (list
@@ -76,7 +76,7 @@ Free lists with comments (for eMesh files)
 
 --------------------------------------------------------------------------------
 
-(source_file
+(foam
   (number_literal)
   (comment)
   (list

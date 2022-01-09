@@ -58,7 +58,7 @@
 ) @dict
 {
     node @val.node
-    attr (@val.node) name = (source-text @child), value = (source-text @val) , kind = "key-val", type = (node-type @val), parent = @dict.node
+    attr (@val.node) name = (source-text @child), value = (source-text @val) , kind = "list", type = (node-type @val), parent = @dict.node
     edge @dict.node -> @val.node
 }
 
@@ -72,6 +72,7 @@
 {
     node @subdict.node
     attr (@subdict.node) name = (source-text @key), kind = "dict", parent = @list.node
+    edge @list.node -> @subdict.node
 }
 
 ;; Go through dicts inside list nodes
@@ -86,5 +87,20 @@
 ) @list
 {
     node child
-    attr (child) name = (source-text @child), kind = "key-val", parent = @subdict.node
+    attr (child) name = (source-text @child),value = (source-text @val) , kind = "key-val", type = (node-type @val), parent = @subdict.node
+    edge @subdict.node -> child
 }
+
+;; Connect subdicts inside a list
+(list
+    item: (_)*
+    item: [(identifier) (string_literal)] @key
+    item: (dict_headless
+        dict_body: (_)*
+        dict_body: (dict key: (_) @sub (_)*) @subsubdict
+    ) @subdict
+) @list
+{
+    edge @subdict.node -> @subsubdict.node
+}
+

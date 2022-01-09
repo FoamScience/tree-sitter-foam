@@ -1,0 +1,28 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    subDict
+    {
+        inList
+        (
+            "hiddenDict"
+            {
+                dictHidden true;
+            }
+            oneMoreHidden
+            {
+                isHidden false;
+            }
+        );
+        subSubDict
+        {
+            cool file;
+        }
+    }
+    secondDict
+    {
+        var 1;
+        more 3;
+    }
+}

@@ -1,0 +1,90 @@
+;; Draw parent-child graphs for OpenFOAM dictionaries/key-vals
+;; - Can penetrate lists
+
+;; Please run with (graph.data holds the OpenFOAM dictionary to parse):
+;; tree-sitter-graph scripts/graph.tsg scripts/graph.data
+
+;; Terms:
+;; - Free dicts: (sub)dictionaries which are not inside lists
+;; - Persistent graph node: a global graph node which lives through the whole program execution
+
+;; Go through all free dicts and persistently create their graph nodes
+(dict
+    key: (_) @key
+) @dict
+{
+    node @dict.node
+    attr (@dict.node) name = (source-text @key), kind = "dict"
+}
+
+;; Go through all free dicts,
+;; looking for any subdicts and constructing an edge (parent -> child)
+(dict
+    key: (_) @key
+    (dict_core 
+        dict_body: (_)*
+        dict_body: (dict key: (_) @sub (_)*) @subdict
+    ) @body
+) @dict
+{
+    attr (@subdict.node) parent = @dict.node
+    edge @dict.node -> @subdict.node
+}
+
+;; Go through all free dicts,
+;; looking for any key-vals and constructing an edge (parent -> child)
+;; Note that we skip lists here as these are treated differently
+(dict
+    key: (_) @key
+    (dict_core 
+        dict_body: (_)*
+        dict_body: (key_value keyword: (_) @child value: (_)* value: (_ !item) @val)
+    ) @body
+) @dict
+{
+    node child
+    attr (child) name = (source-text @child), value = (source-text @val) , kind = "key-val", type = (node-type @val), parent = @dict.node
+    edge @dict.node -> child
+}
+
+;; Go through all key-vals
+;; and add persistent graph nodes for lists
+(dict
+    key: (_) @key
+    (dict_core 
+        dict_body: (_)*
+        dict_body: (key_value keyword: (_) @child value: (_)* value: (list) @val)
+    ) @body
+) @dict
+{
+    node @val.node
+    attr (@val.node) name = (source-text @child), value = (source-text @val) , kind = "key-val", type = (node-type @val), parent = @dict.node
+    edge @dict.node -> @val.node
+}
+
+;; Go through all list nodes
+;; and add persistent graph nodes for subdicts inside the lists
+(list
+    item: (_)*
+    item: [(identifier) (string_literal)] @key
+    item: (dict_headless) @subdict
+) @list
+{
+    node @subdict.node
+    attr (@subdict.node) name = (source-text @key), kind = "dict", parent = @list.node
+}
+
+;; Go through dicts inside list nodes
+;; and add graph nodes for keyvals inside the dicts
+(list
+    item: (_)*
+    item: [(identifier) (string_literal)] @key
+    item: (dict_headless
+        dict_body: (_)*
+        dict_body: (key_value keyword: (_) @child value: (_)* value: (_ !item) @val)
+    ) @subdict
+) @list
+{
+    node child
+    attr (child) name = (source-text @child), kind = "key-val", parent = @subdict.node
+}

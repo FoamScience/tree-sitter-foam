@@ -34,6 +34,10 @@
         {
           "type": "SYMBOL",
           "name": "number_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pyfoam_variable"
         }
       ]
     },
@@ -1033,6 +1037,16 @@
         }
       }
     },
+    "single_python_line": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "IMMEDIATE_TOKEN",
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\n]"
+        }
+      }
+    },
     "pyfoam_template": {
       "type": "SEQ",
       "members": [
@@ -1044,14 +1058,8 @@
           "type": "FIELD",
           "name": "code_body",
           "content": {
-            "type": "REPEAT1",
-            "content": {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "[^\\n]"
-              }
-            }
+            "type": "SYMBOL",
+            "name": "single_python_line"
           }
         },
         {
@@ -1071,19 +1079,34 @@
           "type": "FIELD",
           "name": "code_body",
           "content": {
-            "type": "REPEAT1",
-            "content": {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "[^\\n]"
-              }
-            }
+            "type": "SYMBOL",
+            "name": "single_python_line"
           }
         },
         {
           "type": "STRING",
           "value": "-|"
+        }
+      ]
+    },
+    "pyfoam_variable": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "$$"
+        },
+        {
+          "type": "FIELD",
+          "name": "code_body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "single_python_line"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
         }
       ]
     },

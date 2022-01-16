@@ -52,6 +52,7 @@ module.exports = grammar({
           $._non_uniform_list,
           $._uniform_list,
           $.number_literal,
+	  $.pyfoam_variable,
       ),
 
       // OpenFOAM Dictionaries
@@ -241,8 +242,10 @@ module.exports = grammar({
       )))),
 
       // Basic PyFoam support
-      pyfoam_template: $ => seq('<!--(', field("code_body", repeat1(token.immediate(/[^\n]/))), ')-->'),
-      pyfoam_expression: $ => seq('|-', field("code_body", repeat1(token.immediate(/[^\n]/))), '-|'),
+      single_python_line: $ => repeat1(token.immediate(/[^\n]/)),
+      pyfoam_template: $ => seq('<!--(', field("code_body", $.single_python_line), ')-->'),
+      pyfoam_expression: $ => seq('|-', field("code_body", $.single_python_line), '-|'),
+      pyfoam_variable: $ => seq('$$' , field("code_body", $.single_python_line), '\n'),
 
       // OpenFOAM identifiers
       // This pretty much matches anything a crazy programmer can thinkup for a keyword name;

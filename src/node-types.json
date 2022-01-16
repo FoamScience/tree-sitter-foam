@@ -142,6 +142,10 @@
             "named": true
           },
           {
+            "type": "pyfoam_variable",
+            "named": true
+          },
+          {
             "type": "string_literal",
             "named": true
           },
@@ -297,6 +301,10 @@
           },
           {
             "type": "pyfoam_expression",
+            "named": true
+          },
+          {
+            "type": "pyfoam_variable",
             "named": true
           },
           {
@@ -506,6 +514,10 @@
         },
         {
           "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "pyfoam_variable",
           "named": true
         }
       ]
@@ -744,10 +756,53 @@
   {
     "type": "pyfoam_expression",
     "named": true,
-    "fields": {}
+    "fields": {
+      "code_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "single_python_line",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "pyfoam_template",
+    "named": true,
+    "fields": {
+      "code_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "single_python_line",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "pyfoam_variable",
+    "named": true,
+    "fields": {
+      "code_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "single_python_line",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "single_python_line",
     "named": true,
     "fields": {}
   },
@@ -767,6 +822,10 @@
     }
   },
   {
+    "type": "\n",
+    "named": false
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -784,6 +843,10 @@
   },
   {
     "type": "$",
+    "named": false
+  },
+  {
+    "type": "$$",
     "named": false
   },
   {

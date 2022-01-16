@@ -35,6 +35,7 @@ module.exports = grammar({
     extras: $ => [
       /\s|\\\r?\n/, // Treating whitespace as white space;
       $.comment,    // Treating comments as white space;
+      $.pyfoam_template, // PyFoam stuff is whitespace;
     ],
 
     rules: {
@@ -121,6 +122,7 @@ module.exports = grammar({
           $.boolean,
           $.string_literal,
           $.number_literal,
+          $.pyfoam_expression,
           $.identifier,
       )),
 
@@ -237,6 +239,10 @@ module.exports = grammar({
           /[^*]*\*+([^/*][^*]*\*+)*/,
           '/'
       )))),
+
+      // Basic PyFoam support
+      pyfoam_template: $ => seq('<!--(', field("code_body", repeat1(token.immediate(/[^\n]/))), ')-->'),
+      pyfoam_expression: $ => seq('|-', field("code_body", repeat1(token.immediate(/[^\n]/))), '-|'),
 
       // OpenFOAM identifiers
       // This pretty much matches anything a crazy programmer can thinkup for a keyword name;

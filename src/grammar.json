@@ -438,6 +438,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "pyfoam_expression"
+          },
+          {
+            "type": "SYMBOL",
             "name": "identifier"
           }
         ]
@@ -1029,6 +1033,60 @@
         }
       }
     },
+    "pyfoam_template": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<!--("
+        },
+        {
+          "type": "FIELD",
+          "name": "code_body",
+          "content": {
+            "type": "REPEAT1",
+            "content": {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[^\\n]"
+              }
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")-->"
+        }
+      ]
+    },
+    "pyfoam_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "|-"
+        },
+        {
+          "type": "FIELD",
+          "name": "code_body",
+          "content": {
+            "type": "REPEAT1",
+            "content": {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[^\\n]"
+              }
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "-|"
+        }
+      ]
+    },
     "identifier": {
       "type": "PREC",
       "value": -20,
@@ -1072,6 +1130,10 @@
     {
       "type": "SYMBOL",
       "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "pyfoam_template"
     }
   ],
   "conflicts": [

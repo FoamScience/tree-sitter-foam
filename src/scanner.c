@@ -515,7 +515,14 @@ static Result read_while_identifier(State *state) {
 
     // Require that the first char is an identifier char
     //if (state->lexer->eof(state->lexer)) return res_fail;
-    if (non_identifier_char(c) || c == '(' || c == ')') {
+    if (
+        non_identifier_char(c)
+        || c == '('
+        || c == ')'
+        || c == '<'
+        || c == '>'
+        || c == '-'
+    ) {
         return res_fail;
     }
     s[strlen(s)] = (char) c;

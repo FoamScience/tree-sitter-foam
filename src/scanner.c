@@ -145,13 +145,13 @@ typedef struct {
   indent_vec *indents;
 } State;
 
-State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
-  return (State) {
-    .lexer = l,
-    .symbols = vs,
-    .indents = is,
-  };
-}
+//State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
+//  return (State) {
+//    .lexer = l,
+//    .symbols = vs,
+//    .indents = is,
+//  };
+//}
 
 /**
  * These functions provide the basic interface to the lexer.

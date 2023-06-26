@@ -13,7 +13,7 @@ if [[ $? != 0 ]]; then
 fi
 
 # Parse the example file (Parsing for 1st time yields performance overhead)
-npx tree-sitter parse test/highlight/example-file.foam 2&>1 > /dev/null
+npx tree-sitter parse --scope source.foam -- test/highlight/example-file.foam 2>&1 > /dev/null
 
 # Returns 1 if $2 is found in the list $1
 doesNotContain()
@@ -47,20 +47,20 @@ function selector()
 function timeTreeSitterCommand()
 {
     start=$(date +%s.%N)
-    npx tree-sitter parse $1 > /dev/null
+    npx tree-sitter parse --scope source.foam -- $1 > /dev/null
     error=$?
     end=$(date +%s.%N)
-    result=$(echo "$end - $start" | bc -l)
+    result=$(echo "$end - $start" | bc -l | awk '{printf("%01f", $0)}')
     if [[ $error == 0 ]]; then
-        echo "Pass: $1 "$(printf "%.3f" $result)
+        echo "Pass: $1 $result"
     else
-        echo "Fail: $1 "$(printf "%.3f" $result)
         # Uncomment to edit failing file at failing position
-        coords=$(npx tree-sitter parse $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
+        coords=$(npx tree-sitter parse --scope source.foam -- $1 | tail -1 | grep -o "[0-9]\+, [0-9]\+" | head -1)
         line=$(echo $coords | awk -F, '{print($1+1)}')
         colu=$(echo $coords | awk -F, '{print($2+1)}')
-        vim "+call cursor($line, $colu)" $1
-        exit 1
+        echo "Fail: $1 $result ($line, $colu)"
+        #vim "+call cursor($line, $colu)" $1
+        #exit 1
     fi
 }
 

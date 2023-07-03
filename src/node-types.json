@@ -1,10 +1,5 @@
 [
   {
-    "type": "boolean",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "code",
     "named": true,
     "fields": {},
@@ -524,21 +519,6 @@
     }
   },
   {
-    "type": "identifier",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "boolean",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "key_value",
     "named": true,
     "fields": {
@@ -894,36 +874,24 @@
     "named": false
   },
   {
+    "type": "boolean",
+    "named": true
+  },
+  {
     "type": "escape_sequence",
     "named": true
   },
   {
-    "type": "false",
-    "named": false
-  },
-  {
-    "type": "no",
-    "named": false
+    "type": "identifier",
+    "named": true
   },
   {
     "type": "number_literal",
     "named": true
   },
   {
-    "type": "off",
-    "named": false
-  },
-  {
-    "type": "on",
-    "named": false
-  },
-  {
     "type": "prev_scope",
     "named": true
-  },
-  {
-    "type": "true",
-    "named": false
   },
   {
     "type": "u\"",
@@ -931,10 +899,6 @@
   },
   {
     "type": "u8\"",
-    "named": false
-  },
-  {
-    "type": "yes",
     "named": false
   },
   {

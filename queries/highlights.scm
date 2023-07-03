@@ -29,15 +29,18 @@
     ) @conditional
     (#match? @conditional "ifeq")
 )
+
 (
     (preproc_call) @conditional
     (#match? @conditional "(else|endif)")
 )
 
-;; Literal numbers and strings
+;; Literals
+
 (number_literal) @float
 (string_literal) @string
 (escape_sequence) @escape
+(boolean) @boolean
 
 ;; Treat [m^2 s^-2] the same as if it was put in numbers format
 (dimensions dimension: (identifier) @float)
@@ -56,6 +59,6 @@
 ] @punctuation
 
 ;; Special identifiers
-([(identifier) "on" "off" "true" "false" "yes" "no"] @attribute
-(#match? @attribute "^(uniform|non-uniform|and|or|on|off|true|false|yes|no)$")
-)
+
+((identifier) @attribute
+  (#match? @attribute "^(uniform|non-uniform|and|or)$"))

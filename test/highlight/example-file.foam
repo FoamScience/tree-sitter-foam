@@ -53,7 +53,7 @@ dict
     //              ^ float
     //                  ^ punctuation
     enable true;
-    //      ^ attribute
+    //      ^ boolean
     variable $:dict.div(phi,U1);
     //       ^ conditional
     //        ^ conditional

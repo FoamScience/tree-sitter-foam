@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - windows_ci
+      - pr/7
   pull_request:
     branches:
       - master

@@ -154,16 +154,17 @@ option4 false;
 (foam
   (key_value
     (identifier)
-    (identifier))
+    (boolean))
   (key_value
     (identifier)
-    (identifier))
+    (boolean))
   (key_value
     (identifier)
-    (identifier))
+    (boolean))
   (key_value
     (identifier)
-    (identifier)))
+    (boolean)))
+
 
 ================================================================================
 Macros

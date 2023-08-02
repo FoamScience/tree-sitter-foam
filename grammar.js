@@ -17,10 +17,6 @@ module.exports = grammar({
 
     // Resolve conflicting rules
     conflicts: $ => [
-        [$._non_uniform_list, $._value],
-        [$._uniform_list, $._value],
-        [$._statement, $.dict_headless],
-        [$.preproc_call, $._non_uniform_list],
         [$._statement, $._non_uniform_list],
         [$._non_uniform_list],
         [$.dict],

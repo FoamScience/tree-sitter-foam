@@ -21,6 +21,7 @@ jobs:
       - run: node_modules/.bin/tree-sitter test
       - uses: docker-practice/actions-setup-docker@master
       - run: node_modules/.bin/tree-sitter build --wasm
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - uses: actions/upload-artifact@v3
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:

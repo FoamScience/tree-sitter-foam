@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-foam",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Tree sitter grammer for OpenFOAM dictionaries",
   "main": "bindings/node",
   "types": "bindings/node",

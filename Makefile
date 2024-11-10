@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-foam
 HOMEPAGE_URL := https://github.com/FoamScience/tree-sitter-foam
-VERSION := 0.4.1
+VERSION := 0.4.3
 
 # repository
 SRC_DIR := src
@@ -38,6 +38,19 @@ else
 	SOEXTVER = $(SOEXT).$(SONAME_MAJOR).$(SONAME_MINOR)
 	LINKSHARED = -shared -Wl,-soname,lib$(LANGUAGE_NAME).$(SOEXTVER)
 endif
+
+# Windows-specific setup
+ifeq ($(OS),Windows_NT)
+    CC = cl
+    AR = lib
+    SOEXT = dll
+    LINKSHARED = /DLL
+    DESTDIR = $(shell pwd)
+    INCLUDEDIR ?= $(DESTDIR)/include
+    LIBDIR ?= $(DESTDIR)/lib
+    PCLIBDIR ?= $(DESTDIR)/pkgconfig
+endif
+
 ifneq ($(filter $(shell uname),FreeBSD NetBSD DragonFly),)
 	PCLIBDIR := $(PREFIX)/libdata/pkgconfig
 endif

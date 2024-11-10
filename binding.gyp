@@ -11,11 +11,7 @@
       "sources": [
         "bindings/node/binding.cc",
         "src/parser.c",
-        # NOTE: if your language has an external scanner, add it here.
-      ],
-      "libraries": [
-        "-L<(module_root_dir)",
-        "<(module_root_dir)/libtree-sitter-foam.a"
+        "src/scanner.c"
       ],
       "conditions": [
         ["OS!='win'", {

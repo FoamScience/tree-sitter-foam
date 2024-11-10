@@ -1,103 +1,66 @@
-LANGUAGE_NAME := tree-sitter-foam
-HOMEPAGE_URL := https://github.com/FoamScience/tree-sitter-foam
-VERSION := 0.4.3
+WEB_TREE_SITTER_FILES=README.md package.json tree-sitter-web.d.ts tree-sitter.js tree-sitter.wasm
+TREE_SITTER_VERSION=v0.20.1
 
-# repository
-SRC_DIR := src
-
-TS ?= tree-sitter
-
-# install directory layout
-PREFIX ?= /usr/local
-INCLUDEDIR ?= $(PREFIX)/include
-LIBDIR ?= $(PREFIX)/lib
-PCLIBDIR ?= $(LIBDIR)/pkgconfig
-
-# source/object files
-PARSER := $(SRC_DIR)/parser.c
-EXTRAS := $(filter-out $(PARSER),$(wildcard $(SRC_DIR)/*.c))
-OBJS := $(patsubst %.c,%.o,$(PARSER) $(EXTRAS))
-
-# flags
-ARFLAGS ?= rcs
-override CFLAGS += -I$(SRC_DIR) -std=c2x -fPIC
-
-# ABI versioning
-SONAME_MAJOR = $(shell sed -n 's/\#define LANGUAGE_VERSION //p' $(PARSER))
-SONAME_MINOR = $(word 1,$(subst ., ,$(VERSION)))
-
-# OS-specific bits
-ifeq ($(shell uname),Darwin)
-	SOEXT = dylib
-	SOEXTVER_MAJOR = $(SONAME_MAJOR).$(SOEXT)
-	SOEXTVER = $(SONAME_MAJOR).$(SONAME_MINOR).$(SOEXT)
-	LINKSHARED = -dynamiclib -Wl,-install_name,$(LIBDIR)/lib$(LANGUAGE_NAME).$(SOEXTVER),-rpath,@executable_path/../Frameworks
-else
-	SOEXT = so
-	SOEXTVER_MAJOR = $(SOEXT).$(SONAME_MAJOR)
-	SOEXTVER = $(SOEXT).$(SONAME_MAJOR).$(SONAME_MINOR)
-	LINKSHARED = -shared -Wl,-soname,lib$(LANGUAGE_NAME).$(SOEXTVER)
-endif
-
-# Windows-specific setup
+# Determine OS and set variables accordingly
+OS := $(shell uname 2>/dev/null || echo Unknown)
 ifeq ($(OS),Windows_NT)
-    CC = cl
-    AR = lib
-    SOEXT = dll
-    LINKSHARED = /DLL
-    DESTDIR = $(shell pwd)
-    INCLUDEDIR ?= $(DESTDIR)/include
-    LIBDIR ?= $(DESTDIR)/lib
-    PCLIBDIR ?= $(DESTDIR)/pkgconfig
+    RM = del /Q /S
+    MKDIR = mkdir
+    CP = copy
+    DEV_NULL = NUL
+    SEP = \\
+    SHARED_FLAG = /LD
+    LIB_EXT = .lib
+    OBJ_EXT = .obj
+else
+    RM = rm -rf
+    MKDIR = mkdir -p
+    CP = cp
+    DEV_NULL = /dev/null
+    SEP = /
+    SHARED_FLAG = -shared
+    LIB_EXT = .a
+    OBJ_EXT = .o
 endif
 
-ifneq ($(filter $(shell uname),FreeBSD NetBSD DragonFly),)
-	PCLIBDIR := $(PREFIX)/libdata/pkgconfig
-endif
+all: node_modules/web-tree-sitter tree-sitter-foam.wasm
 
-all: lib$(LANGUAGE_NAME).a lib$(LANGUAGE_NAME).$(SOEXT) $(LANGUAGE_NAME).pc
+# build parser.c
+src/parser.c: grammar.js
+	npx tree-sitter generate
 
-lib$(LANGUAGE_NAME).a: $(OBJS)
-	$(AR) $(ARFLAGS) $@ $^
+# build patched version of web-tree-sitter
+node_modules/web-tree-sitter:
+	@$(RM) tmp$(SEP)tree-sitter
+	@git clone                                       \
+		-c advice.detachedHead=false --quiet           \
+		--depth=1 --branch=$(TREE_SITTER_VERSION)      \
+		https://github.com/tree-sitter/tree-sitter.git \
+		tmp$(SEP)tree-sitter
+	@$(CP) tree-sitter.patch tmp$(SEP)tree-sitter$(SEP)
+	@echo $(DEV_NULL)                      \
+		&& cd tmp$(SEP)tree-sitter          \
+		&& git apply tree-sitter.patch      \
+		&& ./script/build-wasm
+	@$(MKDIR) node_modules$(SEP)web-tree-sitter
+	@$(CP) tmp$(SEP)tree-sitter$(SEP)LICENSE node_modules$(SEP)web-tree-sitter
+	@$(CP) $(addprefix tmp$(SEP)tree-sitter$(SEP)lib$(SEP)binding_web$(SEP),$(WEB_TREE_SITTER_FILES)) node_modules$(SEP)web-tree-sitter
+	@$(RM) tmp$(SEP)tree-sitter
 
-lib$(LANGUAGE_NAME).$(SOEXT): $(OBJS)
-	$(CC) $(LDFLAGS) $(LINKSHARED) $^ $(LDLIBS) -o $@
-ifneq ($(STRIP),)
-	$(STRIP) $@
-endif
+# build web version of tree-sitter-foam
+# NOTE: requires patched version of web-tree-sitter
+tree-sitter-foam.wasm: src/parser.c src/scanner.c
+	npx tree-sitter build --wasm
 
-$(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
-	sed -e 's|@PROJECT_VERSION@|$(VERSION)|' \
-		-e 's|@CMAKE_INSTALL_LIBDIR@|$(LIBDIR:$(PREFIX)/%=%)|' \
-		-e 's|@CMAKE_INSTALL_INCLUDEDIR@|$(INCLUDEDIR:$(PREFIX)/%=%)|' \
-		-e 's|@PROJECT_DESCRIPTION@|$(DESCRIPTION)|' \
-		-e 's|@PROJECT_HOMEPAGE_URL@|$(HOMEPAGE_URL)|' \
-		-e 's|@CMAKE_INSTALL_PREFIX@|$(PREFIX)|' $< > $@
-
-$(PARSER): $(SRC_DIR)/grammar.json
-	$(TS) generate $^
-
-install: all
-	install -d '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter '$(DESTDIR)$(PCLIBDIR)' '$(DESTDIR)$(LIBDIR)'
-	install -m644 bindings/c/$(LANGUAGE_NAME).h '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter/$(LANGUAGE_NAME).h
-	install -m644 $(LANGUAGE_NAME).pc '$(DESTDIR)$(PCLIBDIR)'/$(LANGUAGE_NAME).pc
-	install -m644 lib$(LANGUAGE_NAME).a '$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).a
-	install -m755 lib$(LANGUAGE_NAME).$(SOEXT) '$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXTVER)
-	ln -sf lib$(LANGUAGE_NAME).$(SOEXTVER) '$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXTVER_MAJOR)
-	ln -sf lib$(LANGUAGE_NAME).$(SOEXTVER_MAJOR) '$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXT)
-
-uninstall:
-	$(RM) '$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).a \
-		'$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXTVER) \
-		'$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXTVER_MAJOR) \
-		'$(DESTDIR)$(LIBDIR)'/lib$(LANGUAGE_NAME).$(SOEXT) \
-		'$(DESTDIR)$(INCLUDEDIR)'/tree_sitter/$(LANGUAGE_NAME).h \
-		'$(DESTDIR)$(PCLIBDIR)'/$(LANGUAGE_NAME).pc
+CC := cc
+OURCFLAGS := -fPIC -g -O0 -I src
 
 clean:
-	$(RM) $(OBJS) $(LANGUAGE_NAME).pc lib$(LANGUAGE_NAME).a lib$(LANGUAGE_NAME).$(SOEXT)
+	$(RM) debug$(LIB_EXT) *$(OBJ_EXT) *.a
 
-test:
-	$(TS) test
-
-.PHONY: all install uninstall clean test
+debug$(LIB_EXT): src/parser.c src/scanner.cc
+	$(CC) $(OURCFLAGS) $(CFLAGS) -c -o parser$(OBJ_EXT) src$(SEP)parser.c
+	$(CC) $(OURCFLAGS) $(CFLAGS) -c -o scanner$(OBJ_EXT) src$(SEP)scanner.cc
+	$(CC) $(OURCFLAGS) $(CFLAGS) $(SHARED_FLAG) -o debug$(LIB_EXT) parser$(OBJ_EXT) scanner$(OBJ_EXT)
+	$(RM) $(HOME)$(SEP).cache$(SEP)tree-sitter$(SEP)lib$(SEP)foam$(LIB_EXT)
+	$(CP) debug$(LIB_EXT) $(HOME)$(SEP).cache$(SEP)tree-sitter$(SEP)lib$(SEP)foam$(LIB_EXT)

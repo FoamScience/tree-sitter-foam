@@ -1,0 +1,15 @@
+// Comment
+FoamFile {
+    version 2.0;
+    format ascii;
+    class dictionary;
+    location "constant";
+    object someDict;
+}
+// Looks good to me!
+someDict {
+    this isAValue;
+    also true;
+}
+#include "someFile.cfg"
+key val;

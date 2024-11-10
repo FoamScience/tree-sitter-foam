@@ -2,18 +2,32 @@
   "targets": [
     {
       "target_name": "tree_sitter_foam_binding",
+      "dependencies": [
+        "<!(node -p \"require('node-addon-api').targets\"):node_addon_api_except",
+      ],
       "include_dirs": [
-        "<!(node -e \"require('nan')\")",
-        "src"
+        "src",
       ],
       "sources": [
-        "src/parser.c",
         "bindings/node/binding.cc",
-        "src/scanner.c",
-        # If your language uses an external scanner, add it here.
+        "src/parser.c",
+        # NOTE: if your language has an external scanner, add it here.
       ],
-      "cflags_cc": [
-        "-std=c99"
+      "libraries": [
+        "-L<(module_root_dir)",
+        "<(module_root_dir)/libtree-sitter-foam.a"
+      ],
+      "conditions": [
+        ["OS!='win'", {
+          "cflags_c": [
+            "-std=c11",
+          ],
+        }, { # OS == "win"
+          "cflags_c": [
+            "/std:c11",
+            "/utf-8",
+          ],
+        }],
       ],
     }
   ]

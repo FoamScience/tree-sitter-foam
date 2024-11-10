@@ -415,6 +415,7 @@
   {
     "type": "foam",
     "named": true,
+    "root": true,
     "fields": {
       "item": {
         "multiple": true,

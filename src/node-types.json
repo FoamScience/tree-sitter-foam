@@ -32,6 +32,7 @@
   {
     "type": "comment",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -753,6 +754,7 @@
   {
     "type": "pyfoam_template",
     "named": true,
+    "extra": true,
     "fields": {
       "code_body": {
         "multiple": false,

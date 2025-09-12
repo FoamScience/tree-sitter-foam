@@ -33,7 +33,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
       - run: node_modules/.bin/tree-sitter build --wasm
         if: ${{ matrix.os == 'ubuntu-latest' }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           name: wasm-file

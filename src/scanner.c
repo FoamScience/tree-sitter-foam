@@ -70,7 +70,10 @@ bool tree_sitter_foam_external_scanner_scan(void *payload, TSLexer *lexer,
         skip(lexer);
     }
 
-    if (!isalpha(lexer->lookahead) && lexer->lookahead != '_') {
+    // Only classify ASCII codepoints with isalpha; out-of-range values would
+    // otherwise be an invalid index into the ctype table and crash.
+    if (!(lexer->lookahead <= 0x7f && isalpha((int)lexer->lookahead)) &&
+        lexer->lookahead != '_') {
         if (lexer->eof(lexer)) {
             lexer->result_symbol = END_OF_FILE;
             return true;
